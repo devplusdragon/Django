@@ -99,11 +99,11 @@ class TestView(TestCase):
 
     def test_post_detail(self):
         # 1.1. 포스트가 하나 있다.
-        post_000 = Post.objects.create(
-            title='첫 번째 포스트입니다',
-            content='Hello world',
-            author=self.user_trump,
-        )
+        # post_000 = Post.objects.create(
+        #     title='첫 번째 포스트입니다',
+        #     content='Hello world',
+        #     author=self.user_trump,
+        # )
 
         # 1.2. 그 포스트의 url은 'blog/1/ 이다.
         self.assertEqual(self.post_001.get_absolute_url(), '/blog/1/')
@@ -128,9 +128,25 @@ class TestView(TestCase):
         main_area = soup.find('div', id='main-area')
         post_area = main_area.find('div', id='post-area')
         self.assertIn(self.post_001.title, post_area.text)
-        self.assertIn(self.category_programming.name , post_area.text)
+        self.assertIn(self.category_programming.name, post_area.text)
         # 2.5. 첫 번째 포스트의 작성자가 포스트 영역에 있다.(아직 구현할 수없음)
         self.assertIn(self.user_trump.username.upper(), post_area.text)
 
         # 2.6. 첫 번째 포스트의 내용이 포스트 영역에 있다.
         self.assertIn(self.post_001.content, post_area.text)
+
+    def test_category_page(self):
+        response = self.client.get(self.category_programming.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+        self.navbar_test(soup)
+        self.category_card_test(soup)
+
+        self.assertIn(self.category_programming.name, soup.h1.text)
+
+        main_area = soup.find('div', id='main-area')
+        self.assertIn(self.category_programming.name, main_area.text)
+        self.assertIn(self.post_001.title , main_area.text)
+        self.assertNotIn(self.post_002.title, main_area.text)
+        self.assertNotIn(self.post_003.title, main_area.text)
