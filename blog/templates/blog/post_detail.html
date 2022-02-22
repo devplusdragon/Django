@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>{{post.title}} - Blog</title>
+    <title>{{ post.title }} - Blog</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -27,9 +27,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About Me</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
             </ul>
         </div>
     </div>
@@ -41,8 +40,8 @@
         <!--Post Content Column-->
         <div class="col-lg-8">
 
-            <h1 class="mt-4">{{post.title}}</h1>
-            <h5 class="text-muted">{{post.hook_text}}</h5>
+            <h1 class="mt-4">{{ post.title }}</h1>
+            <h5 class="text-muted">{{ post.hook_text }}</h5>
 
             <p class="lead">
                 by
@@ -51,32 +50,32 @@
 
             <hr>
 
-            <p>{{post.created_at}}</p>
+            <p>{{ post.created_at }}</p>
 
             <hr>
 
             {% if post.head_image %}
-            <img class="img-fluid rounded" src="{{post.head_image.url }}" alt="{{post.title}} head_image">
+                <img class="img-fluid rounded" src="{{ post.head_image.url }}" alt="{{ post.title }} head_image">
             {% else %}
-            <img class="card-img-top" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random image"/>
+                <img class="card-img-top" src="https://picsum.photos/seed/{{ post.id }}/800/200" alt="random image"/>
             {% endif %}
 
             <hr>
-            <p>{{post.content}}</p>
+            <p>{{ post.content }}</p>
             {% if post.file_upload %}
-            <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download> Download :
-                {% if post.get_file_ext == 'csv' %}
-                    <i class="fas fa-file-csv"></i>
-                {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
-                    <i class="fas fa-file-excel"></i>
-                {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
-                    <i class="fas fa-file-word"></i>
-                {% else %}
-                    <i class="fas fa-file"></i>
-                {% endif %}
+                <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download> Download :
+                    {% if post.get_file_ext == 'csv' %}
+                        <i class="fas fa-file-csv"></i>
+                    {% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+                        <i class="fas fa-file-excel"></i>
+                    {% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+                        <i class="fas fa-file-word"></i>
+                    {% else %}
+                        <i class="fas fa-file"></i>
+                    {% endif %}
 
-                {{ post.get_file_name }}
-            </a>
+                    {{ post.get_file_name }}
+                </a>
             {% endif %}
             <hr>
 
