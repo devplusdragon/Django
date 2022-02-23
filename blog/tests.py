@@ -40,7 +40,24 @@ class TestView(TestCase):
         self.post_003.tags.add(self.tag_python_kor)
         self.post_003.tags.add(self.tag_python)
 
-        ############################################################
+
+
+    def test_tag_page(self):
+        print("url : ",  self.tag_hello.get_absolute_url())
+        response = self.client.get(self.tag_hello.get_absolute_url())
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        self.navbar_test(soup)
+        self.category_card_test(soup)
+
+        self.assertIn(self.tag_hello.name, soup.h1.text)
+
+        main_area = soup.find('div', id='main-area')
+        self.assertIn(self.tag_hello.name, main_area.text)
+        self.assertIn(self.post_001.title, main_area.text)
+        self.assertNotIn(self.post_002.title, main_area.text)
+        self.assertNotIn(self.post_003.title, main_area.text)
 
     def category_card_test(self, soup):
         categories_card = soup.find('div', id='categories-card')
@@ -154,9 +171,6 @@ class TestView(TestCase):
         self.assertIn(self.post_001.title, post_area.text)
         self.assertIn(self.category_programming.name, post_area.text)
 
-
-
-
         # 2.5. 첫 번째 포스트의 작성자가 포스트 영역에 있다.(아직 구현할 수없음)
         self.assertIn(self.user_trump.username.upper(), post_area.text)
 
@@ -164,9 +178,8 @@ class TestView(TestCase):
         self.assertIn(self.post_001.content, post_area.text)
 
         self.assertIn(self.tag_hello.name, post_area.text)
-        self.assertNotIn(self.tag_python .name, post_area.text)
+        self.assertNotIn(self.tag_python.name, post_area.text)
         self.assertNotIn(self.tag_python_kor.name, post_area.text)
-
 
     def test_category_page(self):
         response = self.client.get(self.category_programming.get_absolute_url())
