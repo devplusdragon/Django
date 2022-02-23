@@ -42,7 +42,7 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-    tags = models.ManyToManyField(Tag,  blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     # author:추후 작성 예정
 
