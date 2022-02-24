@@ -1,3 +1,5 @@
+{% load socialaccount %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="/">Do It Django</a>
@@ -6,6 +8,8 @@
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
@@ -18,23 +22,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/about_me/">About Me</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                       data-toggle="dropdown" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Log In</a>
-                </li>
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a href="/accounts/logout/" class="dropdown-item">
+                                Lot Out
+                            </a>
+
+                        </div>
+                    </li>
+
+                {% else %}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Log In</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
 
@@ -58,22 +68,22 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-outline-dark btn-sm">
+                        <a role="button" class="btn btn-outline-dark btn-sm" href="{% provider_login_url 'google' %}">
                             <i class="fab fa-google"></i>
                             &nbsp&nbsp Log in with Google
-                        </button>
+                        </a>
 
 
-                        <button type="button" class="btn btn-outline-dark btn-sm">
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/login/">
                             <i class="fas fa-envelope"></i>
-                            &nbsp&nbsp Log in with E-mail
-                        </button>
+                            &nbsp&nbsp Log in with Username
+                        </a>
                     </div>
                     <div class="col-md-6">
-                        <button type="button" class="btn btn-outline-dark btn-sm">
+                        <a role="button" class="btn btn-outline-dark btn-block btn-sm" href="/accounts/signup/">
                             <i class="fas fa-envelope"></i>
                             &nbsp&nbsp Sign up with E-mail
-                        </button>
+                        </a>
                     </div>
 
                 </div>
