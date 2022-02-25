@@ -1,4 +1,3 @@
-from django.contrib.auth.management import get_default_username
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
